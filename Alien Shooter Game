@@ -1,0 +1,18 @@
+import pgzrun
+import random
+
+WIDTH=400
+HEIGHT=400
+TITLE="Alien Shooting GAME"
+a=Actor("aliencoding")
+def draw():
+    screen.fill("brown")
+    a.draw()
+
+
+
+
+
+
+
+pgzrun.go()
