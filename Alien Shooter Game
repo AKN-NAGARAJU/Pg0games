@@ -5,9 +5,21 @@ WIDTH=400
 HEIGHT=400
 TITLE="Alien Shooting GAME"
 a=Actor("aliencoding")
+a.pos=(random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40))
+msg="Click on the happy alien to get\n him back home to his family!"
 def draw():
     screen.fill("brown")
     a.draw()
+    screen.draw.text(msg,(20,20),fontsize=20,color="beige")
+def on_mouse_down(pos):
+    global msg
+    print (pos)
+    if a.collidepoint(pos):
+        a.pos=(random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40))
+        msg="Good Shot!"
+
+    else:
+        msg="You MISSED!"
 
 
 
