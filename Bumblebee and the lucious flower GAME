@@ -1,0 +1,31 @@
+import pgzrun
+import random
+
+WIDTH=400
+HEIGHT=400
+Title="bees and flower"
+a=Actor("bee.coding")
+b=Actor("flowerwithbee.coding")
+a.pos=(random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40))
+b.pos=(random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40))
+msg="Click onto the flower\nto lure the bee!"
+def draw():
+    screen.fill("green")
+    a.draw()
+    b.draw()
+    screen.draw.text(msg,(20,20),fontsize=20,color="white")
+
+def on_mouse_down(pos):
+    global msg
+    print (pos)
+    if b.collidepoint(pos):
+        b.pos=(random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40))
+        msg="Good pollen!"
+
+    else:
+        msg="MY POLLEN!!!!!"
+
+pgzrun.go()
+
+
+
