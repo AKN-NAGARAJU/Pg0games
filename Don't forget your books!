@@ -1,0 +1,46 @@
+import pgzrun
+import random
+gameo=False
+WIDTH=400
+HEIGHT=400
+bkst=[]
+wht=[]
+current=0
+for i in range(5):
+    a=Actor("bk")
+    a.pos=random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40)
+    bkst.append(a)
+
+def draw():
+   if gameo==False:
+    screen.blit("classroom",(0,0))         
+    for a in bkst:
+        a.draw()
+        screen.draw.text(str(bkst.index(a)),(a.x+20,a.y),color="pink")
+
+
+
+    for w in wht:
+        screen.draw.line(w[0],w[1],"blue")
+        
+   else:
+       screen.fill("dark blue")
+       screen.draw.text("End of Game!",(200,200))
+def on_mouse_down(pos):
+    global current,wht
+    if current<5:
+        if bkst[current].collidepoint(pos):
+            if current!=0:
+                b=bkst[current].pos
+                k=bkst[current-1].pos
+                wht.append([b,k])
+                print(wht)
+            current=current+1
+def time():
+    global gameo
+    gameo=True
+clock.schedule(time,10)
+
+
+
+pgzrun.go()
