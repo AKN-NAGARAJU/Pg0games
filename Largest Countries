@@ -1,0 +1,40 @@
+import pgzrun
+import random
+WIDTH=400
+HEIGHT=400
+flgst=[]
+white=[]
+countries=["russia","canada","usa","china","brazil"]
+current=0
+for c in countries:
+    a=Actor(c)
+    a.pos=random.randint(40,WIDTH-40),random.randint(40,HEIGHT-40)
+    flgst.append(a)
+
+
+
+
+
+
+def draw():
+    for c in flgst:
+        c.draw()
+
+    for w in white:
+        screen.draw.line(w[0],w[1],"pink")
+def on_mouse_down(pos):
+    global current,white
+    if current<5:
+        if flgst[current].collidepoint(pos):
+            if current!=0:
+                f=flgst[current].pos
+                g=flgst[current-1].pos
+                white.append([f,g])
+                print(white)
+            current=current+1       
+
+
+
+    
+    
+pgzrun.go()
