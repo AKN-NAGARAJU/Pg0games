@@ -1,12 +1,33 @@
 import pgzrun
+statements=[]
 WIDTH=400
 HEIGHT=400
 
 marquee=Rect(0,0,400,50)
-questionbox=Rect(10,60,300,115)
+questionbox=Rect(10,60,250,109)
+timebox=Rect(270,60,109,109)
+optionbox1=Rect(10,180,175,75)
+optionbox2=Rect(10,270,175,75)
+optionbox3=Rect(200,180,175,75)
+optionbox4=Rect(200,270,175,75)
+skipbox=Rect(10,355,380,50)
+
 def draw():
-    screen.draw.filled_rect(marquee,"blue")
-    screen.draw.filled_rect(questionbox,"pink")
+    screen.draw.filled_rect(marquee,"palegreen")
+    screen.draw.filled_rect(questionbox,"lightcoral")
+    screen.draw.filled_rect(optionbox1,"mistyrose")
+    screen.draw.filled_rect(optionbox2,"mistyrose")
+    screen.draw.filled_rect(optionbox3,"mistyrose")
+    screen.draw.filled_rect(optionbox4,"mistyrose")
+    screen.draw.filled_rect(timebox,"aquamarine")
+    screen.draw.filled_rect(skipbox,"salmon")
+
+
+def read_question_file():
+    file=open("questions.txt","r")
+    for f in file:
+        statements.append(f)
+    file.close()
 
 
 
@@ -14,10 +35,6 @@ def draw():
 
 
 
-
-
-
-
-
-
+read_question_file()
+print(statements)
 pgzrun.go()
