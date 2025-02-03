@@ -1,5 +1,6 @@
 import pgzrun
 statements=[]
+question=None #refers to none(no value)
 WIDTH=400
 HEIGHT=400
 
@@ -22,12 +23,26 @@ def draw():
     screen.draw.filled_rect(timebox,"aquamarine")
     screen.draw.filled_rect(skipbox,"salmon")
 
+    screen.draw.textbox(question[0].strip(),questionbox)
+    screen.draw.textbox(question[1].strip(),optionbox1)
+    screen.draw.textbox(question[2].strip(),optionbox2)
+    screen.draw.textbox(question[3].strip(),optionbox3)
+    screen.draw.textbox(question[4].strip(),optionbox4)
+    
+
+
 
 def read_question_file():
     file=open("questions.txt","r")
     for f in file:
         statements.append(f)
     file.close()
+
+def read_next_question():
+    global question
+    question=statements.pop(0).split("|")
+
+
 
 
 
@@ -36,5 +51,7 @@ def read_question_file():
 
 
 read_question_file()
+read_next_question()
+print(question)
 print(statements)
 pgzrun.go()
