@@ -12,14 +12,12 @@ optionbox2=Rect(10,270,175,75)
 optionbox3=Rect(200,180,175,75)
 optionbox4=Rect(200,270,175,75)
 skipbox=Rect(10,355,380,50)
-
+options=[optionbox1,optionbox2,optionbox3,optionbox4]
 def draw():
     screen.draw.filled_rect(marquee,"palegreen")
     screen.draw.filled_rect(questionbox,"lightcoral")
-    screen.draw.filled_rect(optionbox1,"mistyrose")
-    screen.draw.filled_rect(optionbox2,"mistyrose")
-    screen.draw.filled_rect(optionbox3,"mistyrose")
-    screen.draw.filled_rect(optionbox4,"mistyrose")
+    for option in options:
+        screen.draw.filled_rect(option,"mistyrose")
     screen.draw.filled_rect(timebox,"aquamarine")
     screen.draw.filled_rect(skipbox,"salmon")
 
@@ -28,8 +26,21 @@ def draw():
     screen.draw.textbox(question[2].strip(),optionbox2)
     screen.draw.textbox(question[3].strip(),optionbox3)
     screen.draw.textbox(question[4].strip(),optionbox4)
-    
+    screen.draw.textbox("SKIP",skipbox)#colour can be changed by saying color=""
 
+def on_mouse_down(pos):
+    if skipbox.collidepoint(pos):
+            read_next_question()
+    
+    for option in options:
+        if option.collidepoint(pos):
+            if int(question[5])-1==options.index(option):
+                print("CORRECT")
+            read_next_question()
+        
+        
+
+        
 
 
 def read_question_file():
@@ -40,7 +51,8 @@ def read_question_file():
 
 def read_next_question():
     global question
-    question=statements.pop(0).split("|")
+    if len(statements)!=0:
+        question=statements.pop(0).split("|")
 
 
 
