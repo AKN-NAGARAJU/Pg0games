@@ -1,5 +1,9 @@
 import pgzrun
 statements=[]
+game_over=False
+score=0
+question_number=0
+total_questions=0
 question=None #refers to none(no value)
 WIDTH=400
 HEIGHT=400
@@ -14,21 +18,41 @@ optionbox4=Rect(200,270,175,75)
 skipbox=Rect(10,355,380,50)
 options=[optionbox1,optionbox2,optionbox3,optionbox4]
 def draw():
-    screen.draw.filled_rect(marquee,"palegreen")
-    screen.draw.filled_rect(questionbox,"lightcoral")
-    for option in options:
-        screen.draw.filled_rect(option,"mistyrose")
-    screen.draw.filled_rect(timebox,"aquamarine")
-    screen.draw.filled_rect(skipbox,"salmon")
+    if not game_over:
+        screen.draw.filled_rect(marquee,"palegreen")
+        screen.draw.filled_rect(questionbox,"lightcoral")
+        for option in options:
+            screen.draw.filled_rect(option,"mistyrose")
+        screen.draw.filled_rect(timebox,"aquamarine")
+        screen.draw.filled_rect(skipbox,"salmon")
 
-    screen.draw.textbox(question[0].strip(),questionbox)
-    screen.draw.textbox(question[1].strip(),optionbox1)
-    screen.draw.textbox(question[2].strip(),optionbox2)
-    screen.draw.textbox(question[3].strip(),optionbox3)
-    screen.draw.textbox(question[4].strip(),optionbox4)
-    screen.draw.textbox("SKIP",skipbox)#colour can be changed by saying color=""
+        screen.draw.textbox(question[0].strip(),questionbox)
+        screen.draw.textbox(question[1].strip(),optionbox1)
+        screen.draw.textbox(question[2].strip(),optionbox2)
+        screen.draw.textbox(question[3].strip(),optionbox3)
+        screen.draw.textbox(question[4].strip(),optionbox4)
+        screen.draw.textbox("SKIP",skipbox)#colour can be changed by saying color=""
+        screen.draw.textbox(f"Welcome to the quiz Master.This is Question{question_number} of {total_questions}!!",marquee)
+
+    else:
+        screen.fill("palegreen")
+        if score<5:
+            msg=f"Your score was {score} out of {total_questions}.Maybe you need some more work..."
+        elif score<9:
+            msg=f"Your score was {score} out of {total_questions}.Good Job, on an average score."
+        elif score<total_questions:
+            msg=f"Your score was {score} out of {total_questions}.On a high par you are!!"
+        else:
+            msg=f"Your score was {score} out of {total_questions}. Excellent work my friend!!"
+        screen.draw.text(msg,(40,40))
+        
+    
+def game_end():
+    global game_over
+    game_over=True
 
 def on_mouse_down(pos):
+    global score
     if skipbox.collidepoint(pos):
             read_next_question()
     
@@ -36,24 +60,32 @@ def on_mouse_down(pos):
         if option.collidepoint(pos):
             if int(question[5])-1==options.index(option):
                 print("CORRECT")
+                score=score+1
             read_next_question()
         
         
-
+def update():
+    marquee.x=marquee.x-2
+    if marquee.right<0:
+        marquee.left=WIDTH
         
 
 
 def read_question_file():
+    global total_questions
     file=open("questions.txt","r")
     for f in file:
         statements.append(f)
     file.close()
+    total_questions=len(statements)
 
 def read_next_question():
-    global question
+    global question,question_number
     if len(statements)!=0:
         question=statements.pop(0).split("|")
-
+        question_number=question_number+1
+    else:
+        game_end()
 
 
 
